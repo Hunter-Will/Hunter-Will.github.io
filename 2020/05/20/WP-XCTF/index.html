@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"hunter-will.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="XCTF CRYPTO新手区 1.base64：base64解码 2.Caesar：简单凯撒 3.Morse：摩尔斯电码 4.混合编码：base64+unicode编码 5.幂数加密：这是之前没见过的一种加密方式，就是把二进制数用2的不同次方来表示，解码也比较简单 6.Railfence：栅栏加密，注意是w型的 7.easy_RSA：简单RSA，没什么好说的 8.不仅仅是Morse：培根密码+摩尔">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://hunter-will.github.io/2020/05/09/hello-world/index.html">
+<meta property="og:title" content="WP-XCTF">
+<meta property="og:url" content="http://hunter-will.github.io/2020/05/20/WP-XCTF/index.html">
 <meta property="og:site_name" content="Hunter Will&#39;s Blog">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="XCTF CRYPTO新手区 1.base64：base64解码 2.Caesar：简单凯撒 3.Morse：摩尔斯电码 4.混合编码：base64+unicode编码 5.幂数加密：这是之前没见过的一种加密方式，就是把二进制数用2的不同次方来表示，解码也比较简单 6.Railfence：栅栏加密，注意是w型的 7.easy_RSA：简单RSA，没什么好说的 8.不仅仅是Morse：培根密码+摩尔">
 <meta property="og:locale" content="zh">
-<meta property="article:published_time" content="2020-05-09T00:21:03.060Z">
-<meta property="article:modified_time" content="2020-05-09T00:21:03.060Z">
+<meta property="article:published_time" content="2020-05-20T11:43:11.000Z">
+<meta property="article:modified_time" content="2020-06-02T10:28:52.248Z">
 <meta property="article:author" content="Hunter Will">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://hunter-will.github.io/2020/05/09/hello-world/">
+<link rel="canonical" href="http://hunter-will.github.io/2020/05/20/WP-XCTF/">
 
 
 <script id="page-configurations">
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title>Hello World | Hunter Will's Blog</title>
+  <title>WP-XCTF | Hunter Will's Blog</title>
   
 
 
@@ -151,7 +151,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
-    <link itemprop="mainEntityOfPage" href="http://hunter-will.github.io/2020/05/09/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://hunter-will.github.io/2020/05/20/WP-XCTF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -164,7 +164,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hello World
+          WP-XCTF
         </h1>
 
         <div class="post-meta">
@@ -174,8 +174,15 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-05-09 08:21:03" itemprop="dateCreated datePublished" datetime="2020-05-09T08:21:03+08:00">2020-05-09</time>
+              <time title="Created: 2020-05-20 19:43:11" itemprop="dateCreated datePublished" datetime="2020-05-20T19:43:11+08:00">2020-05-20</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-02 18:28:52" itemprop="dateModified" datetime="2020-06-02T18:28:52+08:00">2020-06-02</time>
+              </span>
 
           
 
@@ -188,19 +195,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <h2 id="XCTF-CRYPTO新手区"><a href="#XCTF-CRYPTO新手区" class="headerlink" title="XCTF CRYPTO新手区"></a>XCTF CRYPTO新手区</h2><ul>
+<li>1.base64：base64解码</li>
+<li>2.Caesar：简单凯撒</li>
+<li>3.Morse：摩尔斯电码</li>
+<li>4.混合编码：base64+unicode编码</li>
+<li>5.幂数加密：这是之前没见过的一种加密方式，就是把二进制数用2的不同次方来表示，解码也比较简单</li>
+<li>6.Railfence：栅栏加密，注意是w型的</li>
+<li>7.easy_RSA：简单RSA，没什么好说的</li>
+<li>8.不仅仅是Morse：培根密码+摩尔斯电码</li>
+<li>9.easychallenge：给了一个pyc文件，反编译后逆逻辑编写解码器即可，注意base64的编码问题，这题之前比赛中做过。</li>
+<li>10.Normal_RSA:主要就是了解如何用openssl把公钥解出来。。。用factordb分解n，再解出私钥即可</li>
+<li>11.转轮机加密：一种古老的机械加密方式，百度到原理直接解密即可</li>
+<li>12.ECC：讲真这玩意需要的数理基础不是一般的多，其算法细节还有很多不了解的地方，最多也就是照葫芦画瓢把这题给解了。。</li>
+</ul>
 
     </div>
 
@@ -215,11 +223,11 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2020/05/09/My-First-Post/" rel="next" title="My First Post">
-      My First Post <i class="fa fa-chevron-right"></i>
+    <a href="/2020/05/20/WP-BUUCTF/" rel="prev" title="WP-BUUCTF">
+      <i class="fa fa-chevron-left"></i> WP-BUUCTF
     </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -278,7 +286,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#XCTF-CRYPTO新手区"><span class="nav-number">1.</span> <span class="nav-text">XCTF CRYPTO新手区</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
