@@ -20,22 +20,22 @@
     var CONFIG = {"hostname":"hunter-will.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="看到题目就觉得这题不一般。下载附件后发现两个python文件，一个是task另一个是hint。刚开始时我尝试不看hint直接打开task。task里的内容很像共模攻击的套路，不同的是它并没有给出e1,e2而是直接使用p,q做为e1,e2这就比较棘手了。有可能共模攻击的题目是为了误导人。在一番尝试无果后我打开了hint.py，这回倒是传统的共模攻击，然而随后我看到了这一段代码： 1234m &amp;#x3">
+  <meta name="description" content="这道题76分，是我向400分进发的第一道题。拿到这道题，看到一个python文件，打开后发现是加密脚本。 12345678if __name__ &#x3D;&#x3D; &quot;__main__&quot;:    _E &#x3D; base    _P &#x3D; gen_p()    _Q &#x3D; gen_q()    assert (gcd(_E, (_P - 1) * (_">
 <meta property="og:type" content="article">
-<meta property="og:title" content="BUU-[NPUCTF2020]共模攻击">
-<meta property="og:url" content="http://hunter-will.github.io/2020/07/01/BUU-gongmogongji/index.html">
+<meta property="og:title" content="BUU-[MRCTF2020]babyRSA">
+<meta property="og:url" content="http://hunter-will.github.io/2020/07/01/BUU-babyRSA/index.html">
 <meta property="og:site_name" content="Hunter Will&#39;s Blog">
-<meta property="og:description" content="看到题目就觉得这题不一般。下载附件后发现两个python文件，一个是task另一个是hint。刚开始时我尝试不看hint直接打开task。task里的内容很像共模攻击的套路，不同的是它并没有给出e1,e2而是直接使用p,q做为e1,e2这就比较棘手了。有可能共模攻击的题目是为了误导人。在一番尝试无果后我打开了hint.py，这回倒是传统的共模攻击，然而随后我看到了这一段代码： 1234m &amp;#x3">
+<meta property="og:description" content="这道题76分，是我向400分进发的第一道题。拿到这道题，看到一个python文件，打开后发现是加密脚本。 12345678if __name__ &#x3D;&#x3D; &quot;__main__&quot;:    _E &#x3D; base    _P &#x3D; gen_p()    _Q &#x3D; gen_q()    assert (gcd(_E, (_P - 1) * (_">
 <meta property="og:locale" content="zh">
-<meta property="article:published_time" content="2020-07-01T13:59:23.000Z">
-<meta property="article:modified_time" content="2020-08-01T01:46:31.723Z">
+<meta property="article:published_time" content="2020-07-01T13:58:30.000Z">
+<meta property="article:modified_time" content="2020-08-01T02:27:21.547Z">
 <meta property="article:author" content="Hunter Will">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="BUUCTF">
 <meta property="article:tag" content="Crypto">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://hunter-will.github.io/2020/07/01/BUU-gongmogongji/">
+<link rel="canonical" href="http://hunter-will.github.io/2020/07/01/BUU-babyRSA/">
 
 
 <script id="page-configurations">
@@ -48,7 +48,7 @@
   };
 </script>
 
-  <title>BUU-[NPUCTF2020]共模攻击 | Hunter Will's Blog</title>
+  <title>BUU-[MRCTF2020]babyRSA | Hunter Will's Blog</title>
   
 
 
@@ -154,7 +154,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
-    <link itemprop="mainEntityOfPage" href="http://hunter-will.github.io/2020/07/01/BUU-gongmogongji/">
+    <link itemprop="mainEntityOfPage" href="http://hunter-will.github.io/2020/07/01/BUU-babyRSA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -167,7 +167,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          BUU-[NPUCTF2020]共模攻击
+          BUU-[MRCTF2020]babyRSA
         </h1>
 
         <div class="post-meta">
@@ -177,14 +177,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-07-01 21:59:23" itemprop="dateCreated datePublished" datetime="2020-07-01T21:59:23+08:00">2020-07-01</time>
+              <time title="Created: 2020-07-01 21:58:30" itemprop="dateCreated datePublished" datetime="2020-07-01T21:58:30+08:00">2020-07-01</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-08-01 09:46:31" itemprop="dateModified" datetime="2020-08-01T09:46:31+08:00">2020-08-01</time>
+                <time title="Modified: 2020-08-01 10:27:21" itemprop="dateModified" datetime="2020-08-01T10:27:21+08:00">2020-08-01</time>
               </span>
 
           
@@ -198,11 +198,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>看到题目就觉得这题不一般。下载附件后发现两个python文件，一个是task另一个是hint。刚开始时我尝试不看hint直接打开task。<br>task里的内容很像共模攻击的套路，不同的是它并没有给出e1,e2而是直接使用p,q做为e1,e2这就比较棘手了。有可能共模攻击的题目是为了误导人。<br>在一番尝试无果后我打开了hint.py，这回倒是传统的共模攻击，然而随后我看到了这一段代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">m &#x3D; bytes_to_long(hint)</span><br><span class="line">p &#x3D; getPrime(256)</span><br><span class="line">c &#x3D; pow(m, 256, p)</span><br><span class="line">print(p)</span><br></pre></td></tr></table></figure>
-<p>合着又套了一层加密啊。一开始我以为直接按照rsa的套路来，求出256在p-1下的逆就完了。结果这两不互质？这怎么搞啊。一番百度后我发现这类问题涉及一些高深的数论知识。但是我们有现成的python库啊。于是我查到了在sympy这个库中有一个nthroot_mod函数可以在模意义下开n次方，那就简单多了。直接开256次方。稍微运算一会后我们得到了一个字符串：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m.bit_length()&lt;400</span><br></pre></td></tr></table></figure>
-<p>这。。。等一下，m的长度小于400,这在暗示task的解决方法肯定不是共模攻击，那什么方法跟明文长度有关呢？加密指数都是256位的数，不可能是低加密指数攻击，尝试分解n是不现实的，factordb没有查到n的分解。印象中好像只有一个CopperSmith定理导出的攻击方法跟明文长度有关。没有办法，只能现学现用了。<br>一番百度学习后，CopperSmith定理给出了在模n意义下，如果一个m阶多项式＝0的方程有一个小于${n^(1/m)}$的根，那么有一个logn的算法把这个方程所有的根都解出来。但我查了半天也没有找到这个算法。。。。在看到52pojie的一篇文章后发现一般都是直接使用sage中的已经实现的算法。没的办法又去学了学sage的用法。还好语法和python大致相同，还有在线运行的平台<a href="http://sagecell.sagemath.org/" target="_blank" rel="noopener">http://sagecell.sagemath.org/</a>那就方便多了。一番操作后终于掌握了这个定理的基本用法。现在问题来了，如何用这个问题解决这道题？由于题目只给了我们c1,c2和n，n肯定不能操作，但c1,c2跟据我的高中数学老师的真理，无非就是加一加，减一减，再乘一乘。于是我们写出了可能的操作：<br>$$c1=m^p$$<br>$$c2=m^q$$<br>$$c1c2=m^{p+q}$$<br>$$c1+c2=m^{p}+m^{q}$$<br>减法类似，但是这样并不能帮助我们解题，幂次和加法无法混合，那能不能把幂次去掉呢？<br>由于p，q都是质数，那么由费马小定理<br>$$m^p \eqiv m mod p$$<br>$$m^q \eqiv m mod q$$<br>也就是说<br>$$c1=xp+m$$<br>$$c2=yq+m$$<br>于是上面的式子化简一下<br>$$c1c2=(xp+m)(yq+m)=m^2+(xp+yq)m+xypq$$<br>$$c1+c2=2m+xp+yq$$<br>由于$n=pq$，要想应用CopperSmith定理，必须构造出模n意义下的多项式方程来。<br>那么$c1c2-(c1+c2)m=xypq-m^2$，想让它模n等于0,必须把$-m^2$消掉，那就加一个$m^2$得到<br>$$m^2+c1c2-(c1+c2)m=xypq \eqiv 0 mod n$$<br>这样我们就有了一个模n等于0的多项式方程，这里m是小于400位的，而$n^{1/2}$大概是512位的，满足CopperSmith定理的条件，这样直接使用sage就可解出m。<br>这道题至少花了我4个小时的时间，99分，还是很值得学习的。</p>
+        <p>这道题76分，是我向400分进发的第一道题。拿到这道题，看到一个python文件，打开后发现是加密脚本。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if __name__ &#x3D;&#x3D; &quot;__main__&quot;:</span><br><span class="line">    _E &#x3D; base</span><br><span class="line">    _P &#x3D; gen_p()</span><br><span class="line">    _Q &#x3D; gen_q()</span><br><span class="line">    assert (gcd(_E, (_P - 1) * (_Q - 1)) &#x3D;&#x3D; 1)</span><br><span class="line">    _M &#x3D; bytes_to_long(flag)</span><br><span class="line">    _C &#x3D; pow(_M, _E, _P * _Q)</span><br><span class="line">    print(&quot;Ciphertext &#x3D; &quot;, _C)</span><br></pre></td></tr></table></figure>
+<p>这一段是主程序，可以看到p和q是用两个函数生成的，简单观察可以发现，两个加密函数都是可以破解的，所以主要思路就是破解加密函数获得p和q了。<br>q的生成过程比较简单</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def gen_q():</span><br><span class="line">    sub_Q &#x3D; getPrime(1024)</span><br><span class="line">    Q_1 &#x3D; getPrime(1024)</span><br><span class="line">    Q_2 &#x3D; getPrime(1024)</span><br><span class="line">    Q &#x3D; sub_Q ** Q_2 % Q_1</span><br><span class="line">    print(&quot;Q_1: &quot;, Q_1)</span><br><span class="line">    print(&quot;Q_2: &quot;, Q_2)</span><br><span class="line">    print(&quot;sub_Q: &quot;, sub_Q)</span><br><span class="line">    return sympy.nextprime(Q)</span><br></pre></td></tr></table></figure>
+<p>直接给出了Q_1 , Q_2和sub_Q，只需要按照式子算出Q然后取下一个质数即可得到q。<br>再来看p</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">def gen_p():</span><br><span class="line">    P &#x3D; [0 for i in range(17)]</span><br><span class="line">    P[0] &#x3D; getPrime(128)</span><br><span class="line">    for i in range(1, 17):</span><br><span class="line">        P[i] &#x3D; sympy.nextprime(P[i-1])</span><br><span class="line">    print(&quot;P_p :&quot;, P[9])</span><br><span class="line">    n &#x3D; 1</span><br><span class="line">    for i in range(17):</span><br><span class="line">        n *&#x3D; P[i]</span><br><span class="line">    p &#x3D; getPrime(1024)</span><br><span class="line">    factor &#x3D; pow(p, base, n)</span><br><span class="line">    print(&quot;P_factor :&quot;, factor)</span><br><span class="line">    return sympy.nextprime(p)</span><br></pre></td></tr></table></figure>
+<p>p的生成逻辑比较复杂，从代码上看，它先生成了17个相邻质数，然后给出了第10个数。这里可以利用sympy的preprime函数结合nextprime函数得到整个数列。<br>然后它透露了p在模这17个质数乘积的base次幂。由于是质数连乘，base又是65537,所以直接取base在phi(n)下的逆d，factor的d次幂就是p。<br>只要反推出p和q，剩下的就是基础的rsa问题了</p>
 
     </div>
 
@@ -223,10 +225,13 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/07/01/coppersmith/" rel="prev" title="CopperSmith定理与一种RSA攻击">
-      <i class="fa fa-chevron-left"></i> CopperSmith定理与一种RSA攻击
+    <a href="/2020/05/20/WP-XCTF/" rel="prev" title="WP-XCTF">
+      <i class="fa fa-chevron-left"></i> WP-XCTF
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/07/01/coppersmith/" rel="next" title="CopperSmith定理与一种RSA攻击">
+      CopperSmith定理与一种RSA攻击 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
