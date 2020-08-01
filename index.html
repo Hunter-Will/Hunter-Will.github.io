@@ -179,7 +179,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-08-01 10:44:30" itemprop="dateModified" datetime="2020-08-01T10:44:30+08:00">2020-08-01</time>
+                <time title="Modified: 2020-08-01 11:09:14" itemprop="dateModified" datetime="2020-08-01T11:09:14+08:00">2020-08-01</time>
               </span>
 
           
@@ -193,12 +193,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>看到题目就觉得这题不一般。下载附件后发现两个python文件，一个是task另一个是hint。刚开始时我尝试不看hint直接打开task。<br>task里的内容很像共模攻击的套路，不同的是它并没有给出e1,e2而是直接使用p,q做为e1,e2这就比较棘手了。有可能共模攻击的题目是为了误导人。<br>在一番尝试无果后我打开了hint.py，这回倒是传统的共模攻击，然而随后我看到了这一段代码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">m = bytes_to_long(hint)</span><br><span class="line">p = getPrime(<span class="number">256</span>)</span><br><span class="line">c = pow(m, <span class="number">256</span>, p)</span><br><span class="line">print(p)</span><br></pre></td></tr></table></figure>
-<p>合着又套了一层加密啊。一开始我以为直接按照rsa的套路来，求出256在p-1下的逆就完了。结果这两不互质？这怎么搞啊。一番百度后我发现这类问题涉及一些高深的数论知识。但是我们有现成的python库啊。于是我查到了在sympy这个库中有一个nthroot_mod函数可以在模意义下开n次方，那就简单多了。直接开256次方。稍微运算一会后我们得到了一个字符串：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m.bit_length()&lt;<span class="number">400</span></span><br></pre></td></tr></table></figure>
-<p>这。。。等一下，m的长度小于400,这在暗示task的解决方法肯定不是共模攻击，那什么方法跟明文长度有关呢？加密指数都是256位的数，不可能是低加密指数攻击，尝试分解n是不现实的，factordb没有查到n的分解。印象中好像只有一个CopperSmith定理导出的攻击方法跟明文长度有关。没有办法，只能现学现用了。<br>一番百度学习后，CopperSmith定理给出了在模n意义下，如果一个m阶多项式＝0的方程有一个小于$ {n^(1/m)} $的根，那么有一个logn的算法把这个方程所有的根都解出来。但我查了半天也没有找到这个算法。。。。在看到52pojie的一篇文章后发现一般都是直接使用sage中的已经实现的算法。没的办法又去学了学sage的用法。还好语法和python大致相同，还有在线运行的平台<a href="http://sagecell.sagemath.org/" target="_blank" rel="noopener">http://sagecell.sagemath.org/</a>那就方便多了。一番操作后终于掌握了这个定理的基本用法。现在问题来了，如何用这个问题解决这道题？由于题目只给了我们c1,c2和n，n肯定不能操作，但c1,c2跟据我的高中数学老师的真理，无非就是加一加，减一减，再乘一乘。于是我们写出了可能的操作：<br>$$ c1=m^p $$<br>$$ c2=m^q $$<br>$$ c1c2=m^{p+q} $$<br>$$ c1+c2=m^{p}+m^{q} $$<br>减法类似，但是这样并不能帮助我们解题，幂次和加法无法混合，那能不能把幂次去掉呢？<br>由于p，q都是质数，那么由费马小定理<br>$$<br>m^p \equiv m mod p<br>m^q \equiv m mod q<br>$$<br>也就是说<br>$$c1=xp+m$$<br>$$c2=yq+m$$<br>于是上面的式子化简一下<br>$$c1c2=(xp+m)(yq+m)=m^2+(xp+yq)m+xypq$$<br>$$c1+c2=2m+xp+yq$$<br>由于$n=pq$，要想应用CopperSmith定理，必须构造出模n意义下的多项式方程来。<br>那么$c1c2-(c1+c2)m=xypq-m^2$，想让它模n等于0,必须把$-m^2$消掉，那就加一个$m^2$得到<br>$$m^2+c1c2-(c1+c2)m=xypq \equiv 0 mod n$$<br>这样我们就有了一个模n等于0的多项式方程，这里m是小于400位的，而$n^{1/2}$大概是512位的，满足CopperSmith定理的条件，这样直接使用sage就可解出m。<br>这道题至少花了我4个小时的时间，99分，还是很值得学习的。</p>
-<p>\(a)\<br>$\a$<br>${a}$</p>
+          <p>看到题目就觉得这题不一般。下载附件后发现两个python文件，一个是task另一个是hint。刚开始时我尝试不看hint直接打开task。<br>task里的内容很像共模攻击的套路，不同的是它并没有给出e1,e2而是直接使用p,q做为e1,e2这就比较棘手了。有可能共模攻击的题目是为了误导人。<br>在一番尝试无果后我打开了hint.py，这回倒是传统的共模攻击，然而随后我看到了这一段代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">m = bytes_to_long(hint)</span><br><span class="line">p = getPrime(<span class="number">256</span>)</span><br><span class="line">c = pow(m, <span class="number">256</span>, p)</span><br><span class="line">print(p)</span><br></pre></td></tr></table></figure><br>合着又套了一层加密啊。一开始我以为直接按照rsa的套路来，求出256在p-1下的逆就完了。结果这两不互质？这怎么搞啊。一番百度后我发现这类问题涉及一些高深的数论知识。但是我们有现成的python库啊。于是我查到了在sympy这个库中有一个nthroot_mod函数可以在模意义下开n次方，那就简单多了。直接开256次方。稍微运算一会后我们得到了一个字符串：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m.bit_length()&lt;<span class="number">400</span></span><br></pre></td></tr></table></figure><br>这。。。等一下，m的长度小于400,这在暗示task的解决方法肯定不是共模攻击，那什么方法跟明文长度有关呢？加密指数都是256位的数，不可能是低加密指数攻击，尝试分解n是不现实的，factordb没有查到n的分解。印象中好像只有一个CopperSmith定理导出的攻击方法跟明文长度有关。没有办法，只能现学现用了。<br>一番百度学习后，CopperSmith定理给出了在模n意义下，如果一个m阶多项式＝0的方程有一个小于$ {n^(1/m)} $的根，那么有一个logn的算法把这个方程所有的根都解出来。但我查了半天也没有找到这个算法。。。。在看到52pojie的一篇文章后发现一般都是直接使用sage中的已经实现的算法。没的办法又去学了学sage的用法。还好语法和python大致相同，还有在线运行的平台<a href="http://sagecell.sagemath.org/" target="_blank" rel="noopener">http://sagecell.sagemath.org/</a>那就方便多了。一番操作后终于掌握了这个定理的基本用法。现在问题来了，如何用这个问题解决这道题？由于题目只给了我们c1,c2和n，n肯定不能操作，但c1,c2跟据我的高中数学老师的真理，无非就是加一加，减一减，再乘一乘。于是我们写出了可能的操作：</p>
+<script type="math/tex; mode=display">c1=m^p</script><script type="math/tex; mode=display">c2=m^q</script><script type="math/tex; mode=display">c1c2=m^{p+q}</script><script type="math/tex; mode=display">c1+c2=m^{p}+m^{q}</script><p>减法类似，但是这样并不能帮助我们解题，幂次和加法无法混合，那能不能把幂次去掉呢？<br>由于p，q都是质数，那么由费马小定理</p>
+<script type="math/tex; mode=display">
+m^p \equiv m mod p
+m^q \equiv m mod q</script><p>也就是说</p>
+<script type="math/tex; mode=display">c1=xp+m</script><script type="math/tex; mode=display">c2=yq+m</script><p>于是上面的式子化简一下</p>
+<script type="math/tex; mode=display">c1c2=(xp+m)(yq+m)=m^2+(xp+yq)m+xypq</script><script type="math/tex; mode=display">c1+c2=2m+xp+yq</script><p>由于$n=pq$，要想应用CopperSmith定理，必须构造出模n意义下的多项式方程来。<br>那么$c1c2-(c1+c2)m=xypq-m^2$，想让它模n等于0,必须把$-m^2$消掉，那就加一个$m^2$得到</p>
+<script type="math/tex; mode=display">m^2+c1c2-(c1+c2)m=xypq \equiv 0 mod n</script><p>这样我们就有了一个模n等于0的多项式方程，这里m是小于400位的，而$n^{1/2}$大概是512位的，满足CopperSmith定理的条件，这样直接使用sage就可解出m。<br>这道题至少花了我4个小时的时间，99分，还是很值得学习的。</p>
+<p>\(a)\\<br>$\a$<br>${a}$</p>
 
       
     </div>
@@ -249,7 +252,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-08-01 10:22:56" itemprop="dateModified" datetime="2020-08-01T10:22:56+08:00">2020-08-01</time>
+                <time title="Modified: 2020-08-01 11:09:24" itemprop="dateModified" datetime="2020-08-01T11:09:24+08:00">2020-08-01</time>
               </span>
 
           
@@ -263,11 +266,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>在做[BUUCTF[NPUCTF2020]共模攻击]一题时用到了CopperSmith定理，这里单独写一下关于这个定理的内容和应用。<br>CopperSmith定理指出当我们知道一个在模n意义下的多项式方程存在一个比较小的根时，我们有一个算法可以算出所有的根。那么这个根有多小呢，应该小于$n^{1/m}$其中m是多项式的阶数。那么这个算法是什么呢？事实上我并没有找到原本的算法和论文，它大概是叫LLL算法，涉及很多代数和数论的知识。因此，我们只要学会如何使用就可以了。<br>开源的数学项目Sage中就实现了这个算法，sage是基于python的一个强大的数学计算项目。这部分代码大致如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">n&#x3D;123456789</span><br><span class="line">PR.&lt;x&gt; PolynomialRing(Zmod(n))</span><br><span class="line">f&#x3D;x^2+x+1</span><br><span class="line">x0&#x3D;f.small_root(X&#x3D;2^k)</span><br></pre></td></tr></table></figure>
-<p>首现n是模数，Zmod会生成一个模n意义下的运算域，而</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PR.&lt;x&gt; PolynomialRing(Zmod(n))</span><br></pre></td></tr></table></figure>
-<p>则给出了在模n意义下的一个变量为x的多项式环。这种定义方式使后面的f可以被直接识别为一个多项式，之后就是求解多项式方程，X=2^k是将解限定在小于2^k的范围内。<br>至于这个定理的具体内容和算法的原理，先挖个坑，后面慢慢补。</p>
+          <p>在做[BUUCTF[NPUCTF2020]共模攻击]一题时用到了CopperSmith定理，这里单独写一下关于这个定理的内容和应用。<br>CopperSmith定理指出当我们知道一个在模n意义下的多项式方程存在一个比较小的根时，我们有一个算法可以算出所有的根。那么这个根有多小呢，应该小于$n^{1/m}$其中m是多项式的阶数。那么这个算法是什么呢？事实上我并没有找到原本的算法和论文，它大概是叫LLL算法，涉及很多代数和数论的知识。因此，我们只要学会如何使用就可以了。<br>开源的数学项目Sage中就实现了这个算法，sage是基于python的一个强大的数学计算项目。这部分代码大致如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">n&#x3D;123456789</span><br><span class="line">PR.&lt;x&gt; PolynomialRing(Zmod(n))</span><br><span class="line">f&#x3D;x^2+x+1</span><br><span class="line">x0&#x3D;f.small_root(X&#x3D;2^k)</span><br></pre></td></tr></table></figure><br>首现n是模数，Zmod会生成一个模n意义下的运算域，而<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PR.&lt;x&gt; PolynomialRing(Zmod(n))</span><br></pre></td></tr></table></figure><br>则给出了在模n意义下的一个变量为x的多项式环。这种定义方式使后面的f可以被直接识别为一个多项式，之后就是求解多项式方程，X=2^k是将解限定在小于2^k的范围内。<br>至于这个定理的具体内容和算法的原理，先挖个坑，后面慢慢补。</p>
 
       
     </div>
@@ -318,7 +317,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-08-01 10:39:36" itemprop="dateModified" datetime="2020-08-01T10:39:36+08:00">2020-08-01</time>
+                <time title="Modified: 2020-08-01 11:09:03" itemprop="dateModified" datetime="2020-08-01T11:09:03+08:00">2020-08-01</time>
               </span>
 
           
@@ -332,11 +331,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>这道题76分，是我向400分进发的第一道题。拿到这道题，看到一个python文件，打开后发现是加密脚本。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    _E = base</span><br><span class="line">    _P = gen_p()</span><br><span class="line">    _Q = gen_q()</span><br><span class="line">    <span class="keyword">assert</span> (gcd(_E, (_P - <span class="number">1</span>) * (_Q - <span class="number">1</span>)) == <span class="number">1</span>)</span><br><span class="line">    _M = bytes_to_long(flag)</span><br><span class="line">    _C = pow(_M, _E, _P * _Q)</span><br><span class="line">    print(<span class="string">"Ciphertext = "</span>, _C)</span><br></pre></td></tr></table></figure>
-<p>这一段是主程序，可以看到p和q是用两个函数生成的，简单观察可以发现，两个加密函数都是可以破解的，所以主要思路就是破解加密函数获得p和q了。<br>q的生成过程比较简单</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gen_q</span><span class="params">()</span>:</span></span><br><span class="line">    sub_Q = getPrime(<span class="number">1024</span>)</span><br><span class="line">    Q_1 = getPrime(<span class="number">1024</span>)</span><br><span class="line">    Q_2 = getPrime(<span class="number">1024</span>)</span><br><span class="line">    Q = sub_Q ** Q_2 % Q_1</span><br><span class="line">    print(<span class="string">"Q_1: "</span>, Q_1)</span><br><span class="line">    print(<span class="string">"Q_2: "</span>, Q_2)</span><br><span class="line">    print(<span class="string">"sub_Q: "</span>, sub_Q)</span><br><span class="line">    <span class="keyword">return</span> sympy.nextprime(Q)</span><br></pre></td></tr></table></figure>
-<p>直接给出了Q_1 , Q_2和sub_Q，只需要按照式子算出Q然后取下一个质数即可得到q。<br>再来看p</p>
+          <p>这道题76分，是我向400分进发的第一道题。拿到这道题，看到一个python文件，打开后发现是加密脚本。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    _E = base</span><br><span class="line">    _P = gen_p()</span><br><span class="line">    _Q = gen_q()</span><br><span class="line">    <span class="keyword">assert</span> (gcd(_E, (_P - <span class="number">1</span>) * (_Q - <span class="number">1</span>)) == <span class="number">1</span>)</span><br><span class="line">    _M = bytes_to_long(flag)</span><br><span class="line">    _C = pow(_M, _E, _P * _Q)</span><br><span class="line">    print(<span class="string">"Ciphertext = "</span>, _C)</span><br></pre></td></tr></table></figure><br>这一段是主程序，可以看到p和q是用两个函数生成的，简单观察可以发现，两个加密函数都是可以破解的，所以主要思路就是破解加密函数获得p和q了。<br>q的生成过程比较简单<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gen_q</span><span class="params">()</span>:</span></span><br><span class="line">    sub_Q = getPrime(<span class="number">1024</span>)</span><br><span class="line">    Q_1 = getPrime(<span class="number">1024</span>)</span><br><span class="line">    Q_2 = getPrime(<span class="number">1024</span>)</span><br><span class="line">    Q = sub_Q ** Q_2 % Q_1</span><br><span class="line">    print(<span class="string">"Q_1: "</span>, Q_1)</span><br><span class="line">    print(<span class="string">"Q_2: "</span>, Q_2)</span><br><span class="line">    print(<span class="string">"sub_Q: "</span>, sub_Q)</span><br><span class="line">    <span class="keyword">return</span> sympy.nextprime(Q)</span><br></pre></td></tr></table></figure><br>直接给出了Q_1 , Q_2和sub_Q，只需要按照式子算出Q然后取下一个质数即可得到q。<br>再来看p</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gen_p</span><span class="params">()</span>:</span></span><br><span class="line">    P = [<span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">17</span>)]</span><br><span class="line">    P[<span class="number">0</span>] = getPrime(<span class="number">128</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">17</span>):</span><br><span class="line">        P[i] = sympy.nextprime(P[i<span class="number">-1</span>])</span><br><span class="line">    print(<span class="string">"P_p :"</span>, P[<span class="number">9</span>])</span><br><span class="line">    n = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">17</span>):</span><br><span class="line">        n *= P[i]</span><br><span class="line">    p = getPrime(<span class="number">1024</span>)</span><br><span class="line">    factor = pow(p, base, n)</span><br><span class="line">    print(<span class="string">"P_factor :"</span>, factor)</span><br><span class="line">    <span class="keyword">return</span> sympy.nextprime(p)</span><br></pre></td></tr></table></figure>
 <p>p的生成逻辑比较复杂，从代码上看，它先生成了17个相邻质数，然后给出了第10个数。这里可以利用sympy的preprime函数结合nextprime函数得到整个数列。<br>然后它透露了p在模这17个质数乘积的base次幂。由于是质数连乘，base又是65537,所以直接取base在phi(n)下的逆d，factor的d次幂就是p。<br>只要反推出p和q，剩下的就是基础的rsa问题了</p>
 
@@ -731,16 +726,12 @@
       
           <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
 <p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
 <h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
 <p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
 <h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
 <p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 
       
@@ -912,6 +903,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

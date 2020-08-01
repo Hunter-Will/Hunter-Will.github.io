@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"hunter-will.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="看到题目就觉得这题不一般。下载附件后发现两个python文件，一个是task另一个是hint。刚开始时我尝试不看hint直接打开task。task里的内容很像共模攻击的套路，不同的是它并没有给出e1,e2而是直接使用p,q做为e1,e2这就比较棘手了。有可能共模攻击的题目是为了误导人。在一番尝试无果后我打开了hint.py，这回倒是传统的共模攻击，然而随后我看到了这一段代码： 1234m &#x3D; by">
+  <meta name="description" content="看到题目就觉得这题不一般。下载附件后发现两个python文件，一个是task另一个是hint。刚开始时我尝试不看hint直接打开task。task里的内容很像共模攻击的套路，不同的是它并没有给出e1,e2而是直接使用p,q做为e1,e2这就比较棘手了。有可能共模攻击的题目是为了误导人。在一番尝试无果后我打开了hint.py，这回倒是传统的共模攻击，然而随后我看到了这一段代码：1234m &#x3D; byt">
 <meta property="og:type" content="article">
 <meta property="og:title" content="BUU-[NPUCTF2020]共模攻击">
 <meta property="og:url" content="http://hunter-will.github.io/2020/07/01/BUU-gongmogongji/index.html">
 <meta property="og:site_name" content="Hunter Will&#39;s Blog">
-<meta property="og:description" content="看到题目就觉得这题不一般。下载附件后发现两个python文件，一个是task另一个是hint。刚开始时我尝试不看hint直接打开task。task里的内容很像共模攻击的套路，不同的是它并没有给出e1,e2而是直接使用p,q做为e1,e2这就比较棘手了。有可能共模攻击的题目是为了误导人。在一番尝试无果后我打开了hint.py，这回倒是传统的共模攻击，然而随后我看到了这一段代码： 1234m &#x3D; by">
+<meta property="og:description" content="看到题目就觉得这题不一般。下载附件后发现两个python文件，一个是task另一个是hint。刚开始时我尝试不看hint直接打开task。task里的内容很像共模攻击的套路，不同的是它并没有给出e1,e2而是直接使用p,q做为e1,e2这就比较棘手了。有可能共模攻击的题目是为了误导人。在一番尝试无果后我打开了hint.py，这回倒是传统的共模攻击，然而随后我看到了这一段代码：1234m &#x3D; byt">
 <meta property="og:locale" content="zh">
 <meta property="article:published_time" content="2020-07-01T13:59:23.000Z">
-<meta property="article:modified_time" content="2020-08-01T02:44:30.755Z">
+<meta property="article:modified_time" content="2020-08-01T03:09:14.383Z">
 <meta property="article:author" content="Hunter Will">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="BUUCTF">
@@ -184,7 +184,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-08-01 10:44:30" itemprop="dateModified" datetime="2020-08-01T10:44:30+08:00">2020-08-01</time>
+                <time title="Modified: 2020-08-01 11:09:14" itemprop="dateModified" datetime="2020-08-01T11:09:14+08:00">2020-08-01</time>
               </span>
 
           
@@ -198,12 +198,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>看到题目就觉得这题不一般。下载附件后发现两个python文件，一个是task另一个是hint。刚开始时我尝试不看hint直接打开task。<br>task里的内容很像共模攻击的套路，不同的是它并没有给出e1,e2而是直接使用p,q做为e1,e2这就比较棘手了。有可能共模攻击的题目是为了误导人。<br>在一番尝试无果后我打开了hint.py，这回倒是传统的共模攻击，然而随后我看到了这一段代码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">m = bytes_to_long(hint)</span><br><span class="line">p = getPrime(<span class="number">256</span>)</span><br><span class="line">c = pow(m, <span class="number">256</span>, p)</span><br><span class="line">print(p)</span><br></pre></td></tr></table></figure>
-<p>合着又套了一层加密啊。一开始我以为直接按照rsa的套路来，求出256在p-1下的逆就完了。结果这两不互质？这怎么搞啊。一番百度后我发现这类问题涉及一些高深的数论知识。但是我们有现成的python库啊。于是我查到了在sympy这个库中有一个nthroot_mod函数可以在模意义下开n次方，那就简单多了。直接开256次方。稍微运算一会后我们得到了一个字符串：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m.bit_length()&lt;<span class="number">400</span></span><br></pre></td></tr></table></figure>
-<p>这。。。等一下，m的长度小于400,这在暗示task的解决方法肯定不是共模攻击，那什么方法跟明文长度有关呢？加密指数都是256位的数，不可能是低加密指数攻击，尝试分解n是不现实的，factordb没有查到n的分解。印象中好像只有一个CopperSmith定理导出的攻击方法跟明文长度有关。没有办法，只能现学现用了。<br>一番百度学习后，CopperSmith定理给出了在模n意义下，如果一个m阶多项式＝0的方程有一个小于$ {n^(1/m)} $的根，那么有一个logn的算法把这个方程所有的根都解出来。但我查了半天也没有找到这个算法。。。。在看到52pojie的一篇文章后发现一般都是直接使用sage中的已经实现的算法。没的办法又去学了学sage的用法。还好语法和python大致相同，还有在线运行的平台<a href="http://sagecell.sagemath.org/" target="_blank" rel="noopener">http://sagecell.sagemath.org/</a>那就方便多了。一番操作后终于掌握了这个定理的基本用法。现在问题来了，如何用这个问题解决这道题？由于题目只给了我们c1,c2和n，n肯定不能操作，但c1,c2跟据我的高中数学老师的真理，无非就是加一加，减一减，再乘一乘。于是我们写出了可能的操作：<br>$$ c1=m^p $$<br>$$ c2=m^q $$<br>$$ c1c2=m^{p+q} $$<br>$$ c1+c2=m^{p}+m^{q} $$<br>减法类似，但是这样并不能帮助我们解题，幂次和加法无法混合，那能不能把幂次去掉呢？<br>由于p，q都是质数，那么由费马小定理<br>$$<br>m^p \equiv m mod p<br>m^q \equiv m mod q<br>$$<br>也就是说<br>$$c1=xp+m$$<br>$$c2=yq+m$$<br>于是上面的式子化简一下<br>$$c1c2=(xp+m)(yq+m)=m^2+(xp+yq)m+xypq$$<br>$$c1+c2=2m+xp+yq$$<br>由于$n=pq$，要想应用CopperSmith定理，必须构造出模n意义下的多项式方程来。<br>那么$c1c2-(c1+c2)m=xypq-m^2$，想让它模n等于0,必须把$-m^2$消掉，那就加一个$m^2$得到<br>$$m^2+c1c2-(c1+c2)m=xypq \equiv 0 mod n$$<br>这样我们就有了一个模n等于0的多项式方程，这里m是小于400位的，而$n^{1/2}$大概是512位的，满足CopperSmith定理的条件，这样直接使用sage就可解出m。<br>这道题至少花了我4个小时的时间，99分，还是很值得学习的。</p>
-<p>\(a)\<br>$\a$<br>${a}$</p>
+        <p>看到题目就觉得这题不一般。下载附件后发现两个python文件，一个是task另一个是hint。刚开始时我尝试不看hint直接打开task。<br>task里的内容很像共模攻击的套路，不同的是它并没有给出e1,e2而是直接使用p,q做为e1,e2这就比较棘手了。有可能共模攻击的题目是为了误导人。<br>在一番尝试无果后我打开了hint.py，这回倒是传统的共模攻击，然而随后我看到了这一段代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">m = bytes_to_long(hint)</span><br><span class="line">p = getPrime(<span class="number">256</span>)</span><br><span class="line">c = pow(m, <span class="number">256</span>, p)</span><br><span class="line">print(p)</span><br></pre></td></tr></table></figure><br>合着又套了一层加密啊。一开始我以为直接按照rsa的套路来，求出256在p-1下的逆就完了。结果这两不互质？这怎么搞啊。一番百度后我发现这类问题涉及一些高深的数论知识。但是我们有现成的python库啊。于是我查到了在sympy这个库中有一个nthroot_mod函数可以在模意义下开n次方，那就简单多了。直接开256次方。稍微运算一会后我们得到了一个字符串：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m.bit_length()&lt;<span class="number">400</span></span><br></pre></td></tr></table></figure><br>这。。。等一下，m的长度小于400,这在暗示task的解决方法肯定不是共模攻击，那什么方法跟明文长度有关呢？加密指数都是256位的数，不可能是低加密指数攻击，尝试分解n是不现实的，factordb没有查到n的分解。印象中好像只有一个CopperSmith定理导出的攻击方法跟明文长度有关。没有办法，只能现学现用了。<br>一番百度学习后，CopperSmith定理给出了在模n意义下，如果一个m阶多项式＝0的方程有一个小于$ {n^(1/m)} $的根，那么有一个logn的算法把这个方程所有的根都解出来。但我查了半天也没有找到这个算法。。。。在看到52pojie的一篇文章后发现一般都是直接使用sage中的已经实现的算法。没的办法又去学了学sage的用法。还好语法和python大致相同，还有在线运行的平台<a href="http://sagecell.sagemath.org/" target="_blank" rel="noopener">http://sagecell.sagemath.org/</a>那就方便多了。一番操作后终于掌握了这个定理的基本用法。现在问题来了，如何用这个问题解决这道题？由于题目只给了我们c1,c2和n，n肯定不能操作，但c1,c2跟据我的高中数学老师的真理，无非就是加一加，减一减，再乘一乘。于是我们写出了可能的操作：</p>
+<script type="math/tex; mode=display">c1=m^p</script><script type="math/tex; mode=display">c2=m^q</script><script type="math/tex; mode=display">c1c2=m^{p+q}</script><script type="math/tex; mode=display">c1+c2=m^{p}+m^{q}</script><p>减法类似，但是这样并不能帮助我们解题，幂次和加法无法混合，那能不能把幂次去掉呢？<br>由于p，q都是质数，那么由费马小定理</p>
+<script type="math/tex; mode=display">
+m^p \equiv m mod p
+m^q \equiv m mod q</script><p>也就是说</p>
+<script type="math/tex; mode=display">c1=xp+m</script><script type="math/tex; mode=display">c2=yq+m</script><p>于是上面的式子化简一下</p>
+<script type="math/tex; mode=display">c1c2=(xp+m)(yq+m)=m^2+(xp+yq)m+xypq</script><script type="math/tex; mode=display">c1+c2=2m+xp+yq</script><p>由于$n=pq$，要想应用CopperSmith定理，必须构造出模n意义下的多项式方程来。<br>那么$c1c2-(c1+c2)m=xypq-m^2$，想让它模n等于0,必须把$-m^2$消掉，那就加一个$m^2$得到</p>
+<script type="math/tex; mode=display">m^2+c1c2-(c1+c2)m=xypq \equiv 0 mod n</script><p>这样我们就有了一个模n等于0的多项式方程，这里m是小于400位的，而$n^{1/2}$大概是512位的，满足CopperSmith定理的条件，这样直接使用sage就可解出m。<br>这道题至少花了我4个小时的时间，99分，还是很值得学习的。</p>
+<p>\(a)\\<br>$\a$<br>${a}$</p>
 
     </div>
 
@@ -388,6 +391,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
