@@ -148,6 +148,288 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
+    <link itemprop="mainEntityOfPage" href="http://hunter-will.github.io/2020/08/01/BUU-Another-RSA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hunter Will">
+      <meta itemprop="description" content="Nothing is true,">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hunter Will's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/01/BUU-Another-RSA/" class="post-title-link" itemprop="url">BUUCTF-[INSHack2019]Yet_Another_RSA</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-08-01 22:25:23" itemprop="dateCreated datePublished" datetime="2020-08-01T22:25:23+08:00">2020-08-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-08-02 09:24:30" itemprop="dateModified" datetime="2020-08-02T09:24:30+08:00">2020-08-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>解压题目的附件，这文件夹叫tmp？也太随意了吧。打开tmp看到yarsac.py，里面是加密的逻辑，可以看到他生成了两个大质数，然后。。。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'0x'</span>+p</span><br></pre></td></tr></table></figure><br>等等，他输出了p？那不就简单了。<br>诶好像不太对<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print &#39;0x&#39;+p.replace(&#39;9F&#39;,&#39;FC&#39;)</span><br></pre></td></tr></table></figure><br>这是把p的16进制里的”9F”全替换成”FC”了吗？有够恶心人的。让我来看看p。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0xDCC5A0BD3A1FC0BEB0DA1C2E8CF6B474481B7C12849B76E03C4C946724DB577D2825D6AA193DB559BC9DBABE1DDE8B5E7805E48749EF002F622F7CDBD7853B200E2A027E87E331AFCFD066ED9900F1E5F5E5196A451A6F9E329EB889D773F08E5FBF45AACB818FD186DD74626180294DCC31805A88D1B71DE5BFEF3ED01F12678D906A833A78EDCE9BDAF22BBE45C0BFB7A82AFE42C1C3B8581C83BF43DFE31BFD81527E507686956458905CC9A660604552A060109DC81D01F229A264AB67C6D7168721AB36DE769CEAFB97F238050193EC942078DDF5329A387F46253A4411A9C8BB71F9AEB11AC9623E41C14FCD2739D76E69283E57DDB11FC531B4611EE3</span><br></pre></td></tr></table></figure><br>还好还好只有4个”FC”现在又是暴力枚举时间了，只要枚举四个”FC”里哪几个是从”9F”替换来的，然后再检验是不是质数即可。说干就干，于是我手动枚举了16种情况。。。。<br>最后确实只有一个数是质数，知道了p，q也可求，那剩下的就是直接求d然后解出m的事了。e是65537,也不会有什么d不存在的问题。最后解出flag，提交。舒服了，终于挤进BUUCTF Crypto前100名了。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
+    <link itemprop="mainEntityOfPage" href="http://hunter-will.github.io/2020/08/01/BUU-EzRSA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hunter Will">
+      <meta itemprop="description" content="Nothing is true,">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hunter Will's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/01/BUU-EzRSA/" class="post-title-link" itemprop="url">BUUCTF-[NPUCTF2020]EzRSA</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-08-01 22:25:07" itemprop="dateCreated datePublished" datetime="2020-08-01T22:25:07+08:00">2020-08-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-08-02 09:10:54" itemprop="dateModified" datetime="2020-08-02T09:10:54+08:00">2020-08-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>题目直接给了一个python附件，打开后就是加密的逻辑。<br>逻辑也很简单，正常的rsa加密逻辑，只是它除了给出n和c之外，还给出了lcm(p-1,q-1)。这意味这什么呢？这意味这直接告诉了你(p-1)*(q-1)<br>假设我们有</p>
+<script type="math/tex; mode=display">ed\equiv1 mod lcm(p-1,q-1)</script><p>那么</p>
+<script type="math/tex; mode=display">
+ed=xlcm(p-1,q-1)+1
+ed=i(p-1)+1
+ed=j(q-1)+1</script><p>这意味着</p>
+<script type="math/tex; mode=display">
+m^{ed}\equiv m mod p
+m^{ed}\equiv m mod q</script><p>也就是</p>
+<script type="math/tex; mode=display">
+m^{ed}=xp+m
+m^{ed}=yq+m</script><p>联立可得</p>
+<script type="math/tex; mode=display">
+xp=yq
+x={yq}/p</script><p>由于x是整数，故</p>
+<script type="math/tex; mode=display">p|yq</script><p>p和q又都是质数<br>所以</p>
+<script type="math/tex; mode=display">
+p|y
+y=kp</script><p>代回上式</p>
+<script type="math/tex; mode=display">
+m^{ed}=kpq+m
+m^{ed}=c^d\equiv m mod pq</script><p>所以只需求出e对lcm(p-1,q-1)的逆就能解出m。<br>然而，你以为这就结束了？看看那个e<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">e &#x3D; 54722</span><br></pre></td></tr></table></figure><br>e和lcm(p-1,q-1)不互质。。。<br>也就是无法求出逆。但是看到gcd(e,lcm(p-1,q-1))=2,我瞬间有了想法。<br>我们可以求出一个d’使</p>
+<script type="math/tex; mode=display">ed'\equiv 2 mod lcm(p-1,q-1)</script><p>那么这样解出的m实际上是$m^2 mod pq$但是我们看到这个$m^2$对于n来说小太多，那我们直接开方。得到m。<br>验证一下果然解出了flag。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
+    <link itemprop="mainEntityOfPage" href="http://hunter-will.github.io/2020/08/01/RSA-What/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hunter Will">
+      <meta itemprop="description" content="Nothing is true,">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hunter Will's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/01/RSA-What/" class="post-title-link" itemprop="url">BUUCTF-RSA&What</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-08-01 22:24:33" itemprop="dateCreated datePublished" datetime="2020-08-01T22:24:33+08:00">2020-08-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-08-02 08:44:24" itemprop="dateModified" datetime="2020-08-02T08:44:24+08:00">2020-08-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>看题目就知道不只是RSA，肯定还套了其它东西。打开文件夹发现好多文件，先看Readme，感觉并没有什么提示。再看rsa.py<br>看到e1,e2就明白了是共模攻击，但是看这一段代码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> len(base64)&gt;<span class="number">0</span>:</span><br><span class="line">    pt = bytes_to_long(base64)</span><br><span class="line">    ct1 = powmod(pt, e1, N)</span><br><span class="line">    ct2 = powmod(pt, e2, N)</span><br><span class="line">    f1.write(<span class="string">"\n%d"</span> % ct1)</span><br><span class="line">    f2.write(<span class="string">"\n%d"</span> % ct2)</span><br><span class="line">    base64 = fr.read(<span class="number">255</span>)</span><br></pre></td></tr></table></figure><br>它每次只读255个字阶，然后用同样的e1,e2,n加密，然后再输出到文件中。看来只能写脚本了。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> myrsa</span><br><span class="line">f1=open(<span class="string">"./HUB1"</span>,<span class="string">"r"</span>)</span><br><span class="line">f2=open(<span class="string">"./HUB2"</span>,<span class="string">"r"</span>)</span><br><span class="line">f=open(<span class="string">"./res"</span>,<span class="string">"wb"</span>)</span><br><span class="line"></span><br><span class="line">l1=f1.readlines()</span><br><span class="line">l2=f2.readlines()</span><br><span class="line"></span><br><span class="line">n=int(l1[<span class="number">0</span>])</span><br><span class="line">e1=int(l1[<span class="number">1</span>])</span><br><span class="line">e2=int(l2[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>,<span class="number">8</span>):</span><br><span class="line">    c1=int(l1[i])</span><br><span class="line">    c2=int(l2[i])</span><br><span class="line">    m=myrsa.snrsa(e1,e2,c1,c2,n)</span><br><span class="line">    f.write(m.to_bytes(((m.bit_length()+<span class="number">7</span>)//<span class="number">8</span>),<span class="string">'big'</span>))</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure><br>myrsa是我自己写的一个便于处理rsa的python模块。脚本处理完后得到一个文件。观察发现是很多的base64编码的文本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">VEhJUz&#x3D;&#x3D;</span><br><span class="line">RkxBR3&#x3D;&#x3D;</span><br><span class="line">SVN&#x3D;</span><br><span class="line">SElEREVOLo&#x3D;&#x3D;</span><br><span class="line">Q0FO</span><br><span class="line">WU9V</span><br><span class="line">RklORM&#x3D;&#x3D;</span><br><span class="line">SVT&#x3D;</span><br><span class="line">T1VUP4&#x3D;&#x3D;</span><br><span class="line">RE8&#x3D;</span><br><span class="line">WU9V</span><br><span class="line">S05PV9&#x3D;&#x3D;</span><br><span class="line">QkFTRTY0P5&#x3D;&#x3D;</span><br><span class="line">WW91bmdD</span><br><span class="line">VEhJTku&#x3D;</span><br><span class="line">WU9V</span><br><span class="line">QVJF</span><br><span class="line">...</span><br></pre></td></tr></table></figure><br>后面还有很多，这就不对劲了，干嘛不直接整成一大段。先解码试试。结果解出来是一大段科普base64的文字，但是它说flag被藏起来了。那这就明白了，flag是隐写在base64编码的文本中了。<br>关于base64隐写其实也很简单，base64的原理是把原来每8位一个字节的二进制串分成每6位一个“字节”，这样一个“字节”就可以用0~63表示，再用码表中对应的字符代替就行。但是原来二进制串的长度不一定是6的倍数，这就导致最后不足6的部分要补齐，而补齐的那部分二进制位不会影响解码过程，却会影响编码后的结果，也就是这部分信息只存在于编码中。这就是base64隐写的原理，但这个部分一段base64编码最多多出来4个二进制位，所以要储存信息一般要很多段base64编码。<br>知道原理后解隐写的脚本也非常好写<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">b=<span class="string">"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"</span></span><br><span class="line">d=&#123;&#125;</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">64</span>):</span><br><span class="line">    d[b[i]]=i</span><br><span class="line"></span><br><span class="line">f=open(<span class="string">"./res"</span>,<span class="string">"r"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sbin</span><span class="params">(x,p)</span>:</span></span><br><span class="line">    a=bin(x)</span><br><span class="line">    a=a[<span class="number">2</span>:]</span><br><span class="line">    l=len(a)</span><br><span class="line">    s=<span class="string">""</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(p-l):</span><br><span class="line">        s+=<span class="string">'0'</span></span><br><span class="line">    <span class="keyword">return</span> s+a</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sb2n</span><span class="params">(s)</span>:</span></span><br><span class="line">    b=bytes()</span><br><span class="line">    <span class="keyword">while</span> len(s)&gt;=<span class="number">8</span>:</span><br><span class="line">        t=s[:<span class="number">8</span>]</span><br><span class="line">        x=int(t,<span class="number">2</span>)</span><br><span class="line">        b+=x.to_bytes(<span class="number">1</span>,<span class="string">'big'</span>)</span><br><span class="line">        s=s[<span class="number">8</span>:]</span><br><span class="line">    <span class="keyword">return</span> b</span><br><span class="line"></span><br><span class="line">tt=<span class="string">""</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> f:</span><br><span class="line">    s=<span class="string">""</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> i:</span><br><span class="line">        <span class="keyword">if</span> j==<span class="string">'='</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">if</span> j==<span class="string">'\n'</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        x=d[j]</span><br><span class="line">        s+=sbin(x,<span class="number">6</span>)</span><br><span class="line">    <span class="keyword">while</span> len(s)&gt;=<span class="number">8</span>:</span><br><span class="line">        s=s[<span class="number">8</span>:]</span><br><span class="line">    tt+=s</span><br><span class="line"></span><br><span class="line">print(sb2n(tt))</span><br></pre></td></tr></table></figure><br>解出来是一串hash值一样的东西，应该就是flag了</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
+    <link itemprop="mainEntityOfPage" href="http://hunter-will.github.io/2020/08/01/BUU-b-se/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hunter Will">
+      <meta itemprop="description" content="Nothing is true,">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hunter Will's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/01/BUU-b-se/" class="post-title-link" itemprop="url">BUU-[WUSTCTF2020]B@se</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-08-01 22:24:17" itemprop="dateCreated datePublished" datetime="2020-08-01T22:24:17+08:00">2020-08-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-08-02 08:15:36" itemprop="dateModified" datetime="2020-08-02T08:15:36+08:00">2020-08-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>本来上分是尽量不用古典密码的，但是RSA做多了思维僵化，做一道base64的题也能活化思维。<br>首现打开这道题的attachment，发现给了一段base64加密的文本，接下来还有一段看起来是码表的东西，那这题就很明朗了。自制码表解码base64<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JASGBWcQPRXEFLbCDIlmnHUVKTYZdMovwipatNOefghq56rs****kxyz012789+&#x2F;</span><br></pre></td></tr></table></figure><br>但是很明显码表缺了4位，下面的文字提示也告诉我们少了什么东西，那怎么办？简单粗暴的暴力枚举所有可能情况，然后解码看看是否有明显的字符串。<br>解码脚本如下<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line">a=<span class="string">"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"</span></span><br><span class="line">b1=<span class="string">"JASGBWcQPRXEFLbCDIlmnHUVKTYZdMovwipatNOefghq56rs"</span></span><br><span class="line">b2=<span class="string">"kxyz012789+/"</span></span><br><span class="line">s=<span class="string">"MyLkTaP3FaA7KOWjTmKkVjWjVzKjdeNvTnAjoH9iZOIvTeHbvD=="</span></span><br><span class="line">c=[<span class="string">'34ju'</span>,<span class="string">'3j4u'</span>,<span class="string">'3ju4'</span>,<span class="string">'34uj'</span>,<span class="string">'3uj4'</span>,<span class="string">'3u4j'</span>,<span class="string">'43ju'</span>,<span class="string">'4j3u'</span>,</span><br><span class="line">   <span class="string">'4ju3'</span>,<span class="string">'43uj'</span>,<span class="string">'4u3j'</span>,<span class="string">'ju34'</span>,<span class="string">'j3u4'</span>,<span class="string">'j34u'</span>,<span class="string">'j43u'</span>,<span class="string">'ju43'</span>,</span><br><span class="line">   <span class="string">'j4u3'</span>,<span class="string">'j43u'</span>,<span class="string">'u34j'</span>,<span class="string">'uj34'</span>,<span class="string">'u3j4'</span>,<span class="string">'u43j'</span>,<span class="string">'u4j3'</span>,<span class="string">'uj43'</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> c:</span><br><span class="line">    b=b1+i+b2</span><br><span class="line">    t=<span class="string">""</span></span><br><span class="line">    d=&#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">64</span>):</span><br><span class="line">        d[b[j]]=a[j]</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> s:</span><br><span class="line">        <span class="keyword">if</span> j!=<span class="string">'='</span>:</span><br><span class="line">            t+=d[j]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            t+=j</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        m=base64.b64decode(t)</span><br><span class="line">        print(m)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br></pre></td></tr></table></figure><br>其时那24种情况是我手动枚举的。。。。我实在不想动脑子写暴力了。。。<br>枚举一番发现很多情况都是可以解出正确的flag的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">b&#39;wctf2020&#123;bare64_!r_v2ry_e@ry_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2020&#123;baqe64_\x11q_v1ry_e@qy_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2020&#123;baqe64_\x11q_v1ry_e@qy_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2020&#123;base64_1s_v3ry_e@sy_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2020&#123;bare64_!r_v2ry_e@ry_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2020&#123;base64_1s_v3ry_e@sy_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2120&#123;bare64_!r_v2ry_e@ry_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2220&#123;baqe64_\x11q_v1ry_e@qy_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2320&#123;baqe64_\x11q_v1ry_e@qy_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2120&#123;base64_1s_v3ry_e@sy_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2220&#123;base64_1s_v3ry_e@sy_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2220&#123;bape64_\x01p_v0ry_e@py_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2120&#123;bape64_\x01p_v0ry_e@py_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2120&#123;bape64_\x01p_v0ry_e@py_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2220&#123;bape64_\x01p_v0ry_e@py_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2320&#123;bape64_\x01p_v0ry_e@py_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2320&#123;bape64_\x01p_v0ry_e@py_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2220&#123;bape64_\x01p_v0ry_e@py_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2120&#123;base64_1s_v3ry_e@sy_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2220&#123;baqe64_\x11q_v1ry_e@qy_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2120&#123;bare64_!r_v2ry_e@ry_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2220&#123;base64_1s_v3ry_e@sy_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2320&#123;bare64_!r_v2ry_e@ry_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2320&#123;baqe64_\x11q_v1ry_e@qy_and_fuN&#125;&#39;</span><br></pre></td></tr></table></figure><br>明显应该是base64开头的，而且所有base64开头的都是一个字符串，于是flag就是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wctf2220&#123;base64_1s_v3ry_e@sy_and_fuN&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
     <link itemprop="mainEntityOfPage" href="http://hunter-will.github.io/2020/07/01/BUU-gongmogongji/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -566,7 +848,7 @@ c1+c2=2m+xp+yq</script><p>由于$n=pq$，要想应用CopperSmith定理，必须�
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-31 22:02:01" itemprop="dateModified" datetime="2020-07-31T22:02:01+08:00">2020-07-31</time>
+                <time title="Modified: 2020-08-02 09:25:21" itemprop="dateModified" datetime="2020-08-02T09:25:21+08:00">2020-08-02</time>
               </span>
 
           
@@ -613,7 +895,7 @@ c1+c2=2m+xp+yq</script><p>由于$n=pq$，要想应用CopperSmith定理，必须�
 <li>幂数加密:</li>
 <li>甲子加密:</li>
 <li>键盘码加密:</li>
-<li>空白字符加密:</li>
+<li>空白字符加密:<h2 id="挖坑未填"><a href="#挖坑未填" class="headerlink" title="挖坑未填"></a>挖坑未填</h2></li>
 </ul>
 
       
@@ -630,133 +912,11 @@ c1+c2=2m+xp+yq</script><p>由于$n=pq$，要想应用CopperSmith定理，必须�
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
-    <link itemprop="mainEntityOfPage" href="http://hunter-will.github.io/2020/05/09/My-First-Post/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hunter Will">
-      <meta itemprop="description" content="Nothing is true,">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hunter Will's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/05/09/My-First-Post/" class="post-title-link" itemprop="url">My First Post</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-05-09 08:51:49 / Modified: 09:32:13" itemprop="dateCreated datePublished" datetime="2020-05-09T08:51:49+08:00">2020-05-09</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>This is the first post created by YuanShihao (Hunter Will), a Chinese student in HITwh.<br>Today I finished this hexo private blog. And start to record my life on blog.<br>Wish you luck!</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
-    <link itemprop="mainEntityOfPage" href="http://hunter-will.github.io/2020/05/09/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hunter Will">
-      <meta itemprop="description" content="Nothing is true,">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hunter Will's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/05/09/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-05-09 08:21:03" itemprop="dateCreated datePublished" datetime="2020-05-09T08:21:03+08:00">2020-05-09</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
 
 
 
@@ -821,12 +981,12 @@ c1+c2=2m+xp+yq</script><p>由于$n=pq$，要想应用CopperSmith定理，必须�
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

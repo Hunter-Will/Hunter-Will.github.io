@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hunter-will.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="本来上分是尽量不用古典密码的，但是RSA做多了思维僵化，做一道base64的题也能活化思维。首现打开这道题的attachment，发现给了一段base64加密的文本，接下来还有一段看起来是码表的东西，那这题就很明朗了。自制码表解码base641JASGBWcQPRXEFLbCDIlmnHUVKTYZdMovwipatNOefghq56rs****kxyz012789+&#x2F;但是很明显码表缺了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BUU-[WUSTCTF2020]B@se">
+<meta property="og:url" content="http://hunter-will.github.io/2020/08/01/BUU-b-se/index.html">
+<meta property="og:site_name" content="Hunter Will&#39;s Blog">
+<meta property="og:description" content="本来上分是尽量不用古典密码的，但是RSA做多了思维僵化，做一道base64的题也能活化思维。首现打开这道题的attachment，发现给了一段base64加密的文本，接下来还有一段看起来是码表的东西，那这题就很明朗了。自制码表解码base641JASGBWcQPRXEFLbCDIlmnHUVKTYZdMovwipatNOefghq56rs****kxyz012789+&#x2F;但是很明显码表缺了">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2020-08-01T14:24:17.000Z">
+<meta property="article:modified_time" content="2020-08-02T00:15:36.008Z">
+<meta property="article:author" content="Hunter Will">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Crypto">
+<meta property="article:tag" content="Base64">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://hunter-will.github.io/2020/08/01/BUU-b-se/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh'
+  };
+</script>
+
+  <title>BUU-[WUSTCTF2020]B@se | Hunter Will's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hunter Will's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Coder, ACMer and CTFer</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
+    <link itemprop="mainEntityOfPage" href="http://hunter-will.github.io/2020/08/01/BUU-b-se/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hunter Will">
+      <meta itemprop="description" content="Nothing is true,">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hunter Will's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BUU-[WUSTCTF2020]B@se
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-08-01 22:24:17" itemprop="dateCreated datePublished" datetime="2020-08-01T22:24:17+08:00">2020-08-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-08-02 08:15:36" itemprop="dateModified" datetime="2020-08-02T08:15:36+08:00">2020-08-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本来上分是尽量不用古典密码的，但是RSA做多了思维僵化，做一道base64的题也能活化思维。<br>首现打开这道题的attachment，发现给了一段base64加密的文本，接下来还有一段看起来是码表的东西，那这题就很明朗了。自制码表解码base64<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JASGBWcQPRXEFLbCDIlmnHUVKTYZdMovwipatNOefghq56rs****kxyz012789+&#x2F;</span><br></pre></td></tr></table></figure><br>但是很明显码表缺了4位，下面的文字提示也告诉我们少了什么东西，那怎么办？简单粗暴的暴力枚举所有可能情况，然后解码看看是否有明显的字符串。<br>解码脚本如下<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line">a=<span class="string">"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"</span></span><br><span class="line">b1=<span class="string">"JASGBWcQPRXEFLbCDIlmnHUVKTYZdMovwipatNOefghq56rs"</span></span><br><span class="line">b2=<span class="string">"kxyz012789+/"</span></span><br><span class="line">s=<span class="string">"MyLkTaP3FaA7KOWjTmKkVjWjVzKjdeNvTnAjoH9iZOIvTeHbvD=="</span></span><br><span class="line">c=[<span class="string">'34ju'</span>,<span class="string">'3j4u'</span>,<span class="string">'3ju4'</span>,<span class="string">'34uj'</span>,<span class="string">'3uj4'</span>,<span class="string">'3u4j'</span>,<span class="string">'43ju'</span>,<span class="string">'4j3u'</span>,</span><br><span class="line">   <span class="string">'4ju3'</span>,<span class="string">'43uj'</span>,<span class="string">'4u3j'</span>,<span class="string">'ju34'</span>,<span class="string">'j3u4'</span>,<span class="string">'j34u'</span>,<span class="string">'j43u'</span>,<span class="string">'ju43'</span>,</span><br><span class="line">   <span class="string">'j4u3'</span>,<span class="string">'j43u'</span>,<span class="string">'u34j'</span>,<span class="string">'uj34'</span>,<span class="string">'u3j4'</span>,<span class="string">'u43j'</span>,<span class="string">'u4j3'</span>,<span class="string">'uj43'</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> c:</span><br><span class="line">    b=b1+i+b2</span><br><span class="line">    t=<span class="string">""</span></span><br><span class="line">    d=&#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">64</span>):</span><br><span class="line">        d[b[j]]=a[j]</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> s:</span><br><span class="line">        <span class="keyword">if</span> j!=<span class="string">'='</span>:</span><br><span class="line">            t+=d[j]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            t+=j</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        m=base64.b64decode(t)</span><br><span class="line">        print(m)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br></pre></td></tr></table></figure><br>其时那24种情况是我手动枚举的。。。。我实在不想动脑子写暴力了。。。<br>枚举一番发现很多情况都是可以解出正确的flag的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">b&#39;wctf2020&#123;bare64_!r_v2ry_e@ry_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2020&#123;baqe64_\x11q_v1ry_e@qy_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2020&#123;baqe64_\x11q_v1ry_e@qy_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2020&#123;base64_1s_v3ry_e@sy_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2020&#123;bare64_!r_v2ry_e@ry_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2020&#123;base64_1s_v3ry_e@sy_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2120&#123;bare64_!r_v2ry_e@ry_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2220&#123;baqe64_\x11q_v1ry_e@qy_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2320&#123;baqe64_\x11q_v1ry_e@qy_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2120&#123;base64_1s_v3ry_e@sy_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2220&#123;base64_1s_v3ry_e@sy_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2220&#123;bape64_\x01p_v0ry_e@py_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2120&#123;bape64_\x01p_v0ry_e@py_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2120&#123;bape64_\x01p_v0ry_e@py_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2220&#123;bape64_\x01p_v0ry_e@py_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2320&#123;bape64_\x01p_v0ry_e@py_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2320&#123;bape64_\x01p_v0ry_e@py_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2220&#123;bape64_\x01p_v0ry_e@py_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2120&#123;base64_1s_v3ry_e@sy_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2220&#123;baqe64_\x11q_v1ry_e@qy_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2120&#123;bare64_!r_v2ry_e@ry_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2220&#123;base64_1s_v3ry_e@sy_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2320&#123;bare64_!r_v2ry_e@ry_and_fuN&#125;&#39;</span><br><span class="line">b&#39;wctf2320&#123;baqe64_\x11q_v1ry_e@qy_and_fuN&#125;&#39;</span><br></pre></td></tr></table></figure><br>明显应该是base64开头的，而且所有base64开头的都是一个字符串，于是flag就是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wctf2220&#123;base64_1s_v3ry_e@sy_and_fuN&#125;</span><br></pre></td></tr></table></figure></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CTF/" rel="tag"># CTF</a>
+              <a href="/tags/Crypto/" rel="tag"># Crypto</a>
+              <a href="/tags/Base64/" rel="tag"># Base64</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/01/BUU-gongmogongji/" rel="prev" title="BUU-[NPUCTF2020]共模攻击">
+      <i class="fa fa-chevron-left"></i> BUU-[NPUCTF2020]共模攻击
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/01/RSA-What/" rel="next" title="BUUCTF-RSA&What">
+      BUUCTF-RSA&What <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Hunter Will</p>
+  <div class="site-description" itemprop="description">Nothing is true,</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hunter Will</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
