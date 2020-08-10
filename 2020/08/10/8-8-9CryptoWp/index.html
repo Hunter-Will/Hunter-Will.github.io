@@ -20,22 +20,21 @@
     var CONFIG = {"hostname":"hunter-will.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="看到题目就觉得这题不一般。下载附件后发现两个python文件，一个是task另一个是hint。刚开始时我尝试不看hint直接打开task。task里的内容很像共模攻击的套路，不同的是它并没有给出e1,e2而是直接使用p,q做为e1,e2这就比较棘手了。有可能共模攻击的题目是为了误导人。在一番尝试无果后我打开了hint.py，这回倒是传统的共模攻击，然而随后我看到了这一段代码：1234m &#x3D; byt">
+  <meta name="description" content="传说中的chive下载附件，题目给了一个encode.py。打开后发现是加密脚本，分析加密脚本的逻辑，可以发现是生成了五个模4余3的质数，之后e&#x3D;2是典型的rabin加密算法。由于所有质数都模4余3，直接取$m_p \equiv c^{\frac {p+1}4}\ mod\ p$ .其余4个也类似。这个证明非常简单，由于c是模p意义下的二次剩余，由欧拉判别法 c^{\frac {p-1}2}\eq">
 <meta property="og:type" content="article">
-<meta property="og:title" content="BUU-[NPUCTF2020]共模攻击">
-<meta property="og:url" content="http://hunter-will.github.io/2020/07/01/BUU-gongmogongji/index.html">
+<meta property="og:title" content="8.8-9CryptoWp">
+<meta property="og:url" content="http://hunter-will.github.io/2020/08/10/8-8-9CryptoWp/index.html">
 <meta property="og:site_name" content="Hunter Will&#39;s Blog">
-<meta property="og:description" content="看到题目就觉得这题不一般。下载附件后发现两个python文件，一个是task另一个是hint。刚开始时我尝试不看hint直接打开task。task里的内容很像共模攻击的套路，不同的是它并没有给出e1,e2而是直接使用p,q做为e1,e2这就比较棘手了。有可能共模攻击的题目是为了误导人。在一番尝试无果后我打开了hint.py，这回倒是传统的共模攻击，然而随后我看到了这一段代码：1234m &#x3D; byt">
+<meta property="og:description" content="传说中的chive下载附件，题目给了一个encode.py。打开后发现是加密脚本，分析加密脚本的逻辑，可以发现是生成了五个模4余3的质数，之后e&#x3D;2是典型的rabin加密算法。由于所有质数都模4余3，直接取$m_p \equiv c^{\frac {p+1}4}\ mod\ p$ .其余4个也类似。这个证明非常简单，由于c是模p意义下的二次剩余，由欧拉判别法 c^{\frac {p-1}2}\eq">
 <meta property="og:locale" content="zh">
-<meta property="article:published_time" content="2020-07-01T13:59:23.000Z">
-<meta property="article:modified_time" content="2020-08-02T01:35:47.420Z">
+<meta property="article:published_time" content="2020-08-10T03:05:16.000Z">
+<meta property="article:modified_time" content="2020-08-10T03:22:43.838Z">
 <meta property="article:author" content="Hunter Will">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="Crypto">
-<meta property="article:tag" content="BUUCTF">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://hunter-will.github.io/2020/07/01/BUU-gongmogongji/">
+<link rel="canonical" href="http://hunter-will.github.io/2020/08/10/8-8-9CryptoWp/">
 
 
 <script id="page-configurations">
@@ -48,7 +47,7 @@
   };
 </script>
 
-  <title>BUU-[NPUCTF2020]共模攻击 | Hunter Will's Blog</title>
+  <title>8.8-9CryptoWp | Hunter Will's Blog</title>
   
 
 
@@ -154,7 +153,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
-    <link itemprop="mainEntityOfPage" href="http://hunter-will.github.io/2020/07/01/BUU-gongmogongji/">
+    <link itemprop="mainEntityOfPage" href="http://hunter-will.github.io/2020/08/10/8-8-9CryptoWp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -167,7 +166,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          BUU-[NPUCTF2020]共模攻击
+          8.8-9CryptoWp
         </h1>
 
         <div class="post-meta">
@@ -176,16 +175,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2020-07-01 21:59:23" itemprop="dateCreated datePublished" datetime="2020-07-01T21:59:23+08:00">2020-07-01</time>
+              <time title="Created: 2020-08-10 11:05:16 / Modified: 11:22:43" itemprop="dateCreated datePublished" datetime="2020-08-10T11:05:16+08:00">2020-08-10</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-08-02 09:35:47" itemprop="dateModified" datetime="2020-08-02T09:35:47+08:00">2020-08-02</time>
-              </span>
 
           
 
@@ -198,12 +191,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>看到题目就觉得这题不一般。下载附件后发现两个python文件，一个是task另一个是hint。刚开始时我尝试不看hint直接打开task。<br>task里的内容很像共模攻击的套路，不同的是它并没有给出e1,e2而是直接使用p,q做为e1,e2这就比较棘手了。有可能共模攻击的题目是为了误导人。<br>在一番尝试无果后我打开了hint.py，这回倒是传统的共模攻击，然而随后我看到了这一段代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">m = bytes_to_long(hint)</span><br><span class="line">p = getPrime(<span class="number">256</span>)</span><br><span class="line">c = pow(m, <span class="number">256</span>, p)</span><br><span class="line">print(p)</span><br></pre></td></tr></table></figure><br>合着又套了一层加密啊。一开始我以为直接按照rsa的套路来，求出256在p-1下的逆就完了。结果这两不互质？这怎么搞啊。一番百度后我发现这类问题涉及一些高深的数论知识。但是我们有现成的python库啊。于是我查到了在sympy这个库中有一个nthroot_mod函数可以在模意义下开n次方，那就简单多了。直接开256次方。稍微运算一会后我们得到了一个字符串：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m.bit_length()&lt;<span class="number">400</span></span><br></pre></td></tr></table></figure><br>这。。。等一下，m的长度小于400,这在暗示task的解决方法肯定不是共模攻击，那什么方法跟明文长度有关呢？加密指数都是256位的数，不可能是低加密指数攻击，尝试分解n是不现实的，factordb没有查到n的分解。印象中好像只有一个CopperSmith定理导出的攻击方法跟明文长度有关。没有办法，只能现学现用了。<br>一番百度学习后，CopperSmith定理给出了在模n意义下，如果一个m阶多项式＝0的方程有一个小于$n^{1/n}$的根，那么有一个logn的算法把这个方程所有的根都解出来。但我查了半天也没有找到这个算法。。。。在看到52pojie的一篇文章后发现一般都是直接使用sage中的已经实现的算法。没的办法又去学了学sage的用法。还好语法和python大致相同，还有在线运行的平台<a href="http://sagecell.sagemath.org/" target="_blank" rel="noopener">http://sagecell.sagemath.org/</a>那就方便多了。一番操作后终于掌握了这个定理的基本用法。现在问题来了，如何用这个问题解决这道题？由于题目只给了我们c1,c2和n，n肯定不能操作，但c1,c2跟据我的高中数学老师的真理，无非就是加一加，减一减，再乘一乘。于是我们写出了可能的操作：</p>
-<script type="math/tex; mode=display">c1=m^p</script><script type="math/tex; mode=display">c2=m^q</script><script type="math/tex; mode=display">c1c2=m^{p+q}</script><script type="math/tex; mode=display">c1+c2=m^{p}+m^{q}</script><p>减法类似，但是这样并不能帮助我们解题，幂次和加法无法混合，那能不能把幂次去掉呢？<br>由于p，q都是质数，那么由费马小定理</p>
-<script type="math/tex; mode=display">m^p \equiv m\ mod\ p</script><script type="math/tex; mode=display">m^q \equiv m\ mod\ q</script><p>也就是说</p>
-<script type="math/tex; mode=display">c1=xp+m</script><script type="math/tex; mode=display">c2=yq+m</script><p>于是上面的式子化简一下</p>
-<script type="math/tex; mode=display">c1c2=(xp+m)(yq+m)=m^2+(xp+yq)m+xypq</script><script type="math/tex; mode=display">c1+c2=2m+xp+yq</script><p>由于$n=pq$，要想应用CopperSmith定理，必须构造出模n意义下的多项式方程来。<br>那么$c1c2-(c1+c2)m=xypq-m^2$，想让它模n等于0,必须把$-m^2$消掉，那就加一个$m^2$得到</p>
-<script type="math/tex; mode=display">m^2+c1c2-(c1+c2)m=xypq \equiv 0\ mod\ n</script><p>这样我们就有了一个模n等于0的多项式方程，这里m是小于400位的，而$n^{1/2}$大概是512位的，满足CopperSmith定理的条件，这样直接使用sage就可解出m。<br>这道题至少花了我4个小时的时间，99分，还是很值得学习的。</p>
+        <h2 id="传说中的chive"><a href="#传说中的chive" class="headerlink" title="传说中的chive"></a>传说中的chive</h2><p>下载附件，题目给了一个encode.py。打开后发现是加密脚本，分析加密脚本的逻辑，可以发现是生成了五个模4余3的质数，之后e=2是典型的rabin加密算法。由于所有质数都模4余3，直接取$m_p \equiv c^{\frac {p+1}4}\ mod\ p$ .其余4个也类似。这个证明非常简单，由于c是模p意义下的二次剩余，由欧拉判别法</p>
+<script type="math/tex; mode=display">c^{\frac {p-1}2}\equiv 1\ mod\ p</script><script type="math/tex; mode=display">m_p^2=c\equic c*c^{\frac {p-1}2}=(c^{\frac {p+1}4})^2\ mod\ p</script><script type="math/tex; mode=display">m_p\equiv c^{ {p+1}4}\ mod\ p</script><p>p模4余3，则(p+1)/4为整数，可以直接计算。对于p,q,r,s,t分别求出$m_p,m_q,m_r,m_s,m_t$然后用中国剩余定理合并即可得到m。但要注意的是一般平方根是存在两个的，也就是$m_p,p-m_p$都是c在模p意义下的平方根，只不过一个正根一个负根。这里有5个质数，所以有$2^5=32$种情况，别忘了枚举即可。</p>
+<h2 id="失落的藏宝图"><a href="#失落的藏宝图" class="headerlink" title="失落的藏宝图"></a>失落的藏宝图</h2><p>打开题目附件，发现是一道古典密码题，开头一句“笑迎八方客，喜得四面财”是在暗示我们flag用的是四方密码，而盒子上那行字应该就是flag的密文了。四方密码需要两个密钥，下面两行小字应该就是描述的密钥，第一行小字，根据标点符号可以猜出来第一个单词是congratulations，观察一下就可以发现它不是单表替换密码（也可以丢quipqiup验证）常用的多表替换密码挨个试一试，可以发现是维吉尼亚密码，对着码表可以推出密钥是security，这样就成功解出第一行小字：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Congratulations! The first key is security, now go to find the second one.</span><br></pre></td></tr></table></figure><br>第二行是一堆生僻汉字，生僻汉字无非就是读音或编码，把它们的读音写出来发现并没有什么规律，甚至还有多音字，拼音首字母各种解密尝试也没有效果，基本确定跟拼音没有关系了。尝试编码，使用十六进制编辑器打开题目的附件找到这行话，或者用除了记事本以外的其它什么编辑器把这行生僻字保存到一个单独的文档中。因为用记事本保存或者将它复制到python脚本中或者其它地方都会导致它的编码改变。就是说它的字形不会变，但它内部的二进制储存方式变了。这就直接导致无法解出第二个密钥。最保险的方法是使用十六进制编辑器直接打开这个文件或者写个程序以二进制读取这个文件。然后把读出来的十六进制值复制到python脚本中解码。通过枚举偏移位数可以得到解码后的明文是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">You&#96;got&#96;the&#96;second&#96;keya&#96;The&#96;key&#96;is&#96;information</span><br></pre></td></tr></table></figure><br>其实知道了第一个密钥，第二个密钥可以猜出来，security一般对应都是information或Internet之类的，比较扣题而且有意义，直接尝试猜测第二个密钥的单词就有可能直接解出来flag。而且由于四方密码的加密特性，即使密钥中错了一两个字母仍然能够解出大部分的信息，再猜测一波就可以复原flag了。</p>
+<h2 id="神秘信封"><a href="#神秘信封" class="headerlink" title="神秘信封"></a>神秘信封</h2><p>这题是我后补的，比赛中并没有做出来。做出这题的关键是要正确猜测出题人意图。。。题目的附件文本中给出一个n和一堆c，根据pubkey(e,n)可以猜出是RSA，题目给出条件e&lt;20000暗示我们要枚举e。关键的一步就是要如何理解大量的c。如果你认为这些c是同一个明文使用不同的e加密的（就像我一样）你就掉坑里了。。。事实上这些c是flag的每一个字符单独加密成的。。。。<del>没有提示谁会这么加密啊</del>。知道了这一点就非常好做了。首先枚举e，由于我们知道第一个字符是f，只要尝试将f加密判断是否与第一个密文相同就能确定e了。确定了e，剩下的也非常简单，无法分解n？没有问题，不需要分解n，直接枚举每个字符是什么，然后用e和n加密判断是否与密文相同即可。总的来说就是一道爆破题，但你要是不知道加密的规则。。。呵呵。。。</p>
+<h2 id="The-golden-apple"><a href="#The-golden-apple" class="headerlink" title="The golden apple"></a>The golden apple</h2><p>题目给的附件是一个加密脚本，脚本的加密逻辑大概是先使用梅森旋转算法生成一系列随机数，然后对于每个flag中字符，把它转成数值后用MD5加密再与生成的随机数异或，由于梅森旋转算法生成的是伪随机数，如果seed一样，生成的随机数列永远是相同的。而分析它的算法流程可以知道，seed的大小应该是int以内的（c++）根据脚本里的提示我们可以知道flag的前几个字符是“flag{”，那我们就可以逆推出第一个使用的随机数。就是把“f”的数值用MD5加密再异或回去就可以得到前4个随机数，接下来就是爆破时间了。暴力枚举seed，根据梅森旋转算法生成第一个随机数判断是否与我们还原回来的随机数相同即可。但要注意可能会有多个种子生成的第一个随机数相同，但梅森旋转算法优秀的随机性确保了这个数量不会太多。事实上符合条件的只有两个随机数种子。再根据后面的随机数筛选一下就可以得到随机数种子seed=1668245885。需要注意的是爆破的时候尽量用c++，python真的比c++慢很多，另外flag每次是随机的，但是seed不会随机，所以每次打开靶机，后要用即时生成的数据还原flag，如果过了靶机的时间就只能重新还原了。</p>
 
     </div>
 
@@ -215,7 +207,6 @@
           <div class="post-tags">
               <a href="/tags/CTF/" rel="tag"># CTF</a>
               <a href="/tags/Crypto/" rel="tag"># Crypto</a>
-              <a href="/tags/BUUCTF/" rel="tag"># BUUCTF</a>
           </div>
 
         
@@ -224,13 +215,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/07/01/coppersmith/" rel="prev" title="CopperSmith定理与一种RSA攻击">
-      <i class="fa fa-chevron-left"></i> CopperSmith定理与一种RSA攻击
+    <a href="/2020/08/03/rsa/" rel="prev" title="RSA常见攻击类型">
+      <i class="fa fa-chevron-left"></i> RSA常见攻击类型
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/08/01/BUU-b-se/" rel="next" title="BUU-[WUSTCTF2020]B@se">
-      BUU-[WUSTCTF2020]B@se <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -289,6 +277,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#传说中的chive"><span class="nav-number">1.</span> <span class="nav-text">传说中的chive</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#失落的藏宝图"><span class="nav-number">2.</span> <span class="nav-text">失落的藏宝图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#神秘信封"><span class="nav-number">3.</span> <span class="nav-text">神秘信封</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-golden-apple"><span class="nav-number">4.</span> <span class="nav-text">The golden apple</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

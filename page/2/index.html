@@ -148,6 +148,103 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
+    <link itemprop="mainEntityOfPage" href="http://hunter-will.github.io/2020/05/20/WP-BUUCTF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hunter Will">
+      <meta itemprop="description" content="Nothing is true,">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hunter Will's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/20/WP-BUUCTF/" class="post-title-link" itemprop="url">WP-BUUCTF</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-05-20 19:23:02" itemprop="dateCreated datePublished" datetime="2020-05-20T19:23:02+08:00">2020-05-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-07-31 22:02:39" itemprop="dateModified" datetime="2020-07-31T22:02:39+08:00">2020-07-31</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="BUUCTF-CRYPTO前30"><a href="#BUUCTF-CRYPTO前30" class="headerlink" title="BUUCTF CRYPTO前30"></a>BUUCTF CRYPTO前30</h2><ul>
+<li>1.MD5：打开文件发现一串16进制字符串，丢进MD5解密网站得到flag</li>
+<li>2.Url编码：如题，给出了一串url编码解码即可</li>
+<li>3.看我回旋踢：想到“回旋13踢”猜测是ROT13，直接用凯撒密码的解密脚本得到flag</li>
+<li>4.一眼就解密：末尾=表示为base64编码，解码即可</li>
+<li>5.摩丝：摩尔斯电码，分隔符是空格</li>
+<li>6.签到：同样base64</li>
+<li>7.password：更像一道社工题？，考虑到题目是password，而题目只给了姓名和生日，可能是让猜测弱密码，尝试zs19900315成功</li>
+<li>8.变异凯撒：题目告诉我们是一种凯撒密码，但不是普通的凯撒密码，分析前4个字母的ascii码发现与flag相差为等差数列，写脚本解密即可</li>
+<li>9.Quoted-printable：题目已经很明白了，用解码器解码即可</li>
+<li>10.Rabbit：题目即加密算法，找网站解密即可</li>
+<li>11.RSA：RSA入门题目，RSA的原理不再解释，题目给出了p，q，e，求解e对phi的逆元即可。</li>
+<li>12.篱笆墙的影子：题目告诉我们跟篱笆（栅栏）有关系，栅栏密码暴力解密即可</li>
+<li>13.丢失的MD5：给了一份源码，看起来是在生成MD5，刚开始有点没有思路，后来把它生成的MD5交上去竟然过了。。。</li>
+<li>14.Alice与Bob：题目明确说分解素数，百度发现一个分解素数的网站factordb.com，按题目要求即可</li>
+<li>15.老文盲了：一串生僻字，想到平时用生僻字最常用的就是读音，于是傻傻的去查字典。。。发现真的是读音，把他告诉你的flag那一段贴进去即可</li>
+<li>16.rsarsa：同样给出了pqe和密文，解出明文还犹豫了一下要不要转成字符串，结果把数字交上去就过了。。</li>
+<li>17.windows系统密码：结合题目给出的文件好像是保存系统密码hash的文件，随便把第一串数字找一个hash查询网站查询，发现是admin，于是猜测后面是不同账户的名称和密码，找到账户名称为ctf的密码，即为flag。</li>
+<li>18.大帝的密码武器：大帝，就是凯撒大帝吧，把密文暴力解密发现是SECURITY，用同样的偏移量加密即可</li>
+<li>19.传统知识+古典密码：为什么这题的文件里还有另一题的文件，看到题面想起之前看到过用六十甲子加密的，于是把密文按甲子的顺序写成数字，再加上60，发现像一串ASCII码，写成字符后发现没有任何规律，尝试各种常见古典密码失败，推测可能是嵌套，一点一点枚举发现是栅栏+凯撒。。。。。。耗了好长时间。。。</li>
+<li>20.cat_flag：给了一张图片，上面有两种猫咪，转化成二进制矩阵发现8位一行，再转换成ascii码得到flag</li>
+<li>21.燕言燕语：看到16进制字符串尝试MD5，发现两个字符串：yanzi 和一串密文，密文尝试解密无效，这时想起yanzi不能没有用，于是把yanzi作为密钥尝试维吉尼亚密码成功得到flag。</li>
+<li>22.灵能精通：看起来像是猪圈密码，但又不是标准的猪圈密码，百度了一圈发现了好多变种，这玩意好像可以随便变啊。这种密码叫圣堂武士密码，百度到码表直接解码。。。</li>
+<li>23.RSA1：这次给了一个dp，dq，一开始不知道什么意思，百度后才知道是d mod （p-1）和d mod （q-1）根据rsa的原理C^d≡C^dp  mod p , C^d≡C^dq  mod q将两个方程按合并同余方程组的方法合并即可得到C^d% pq的值，这里还要把数字转换成字符串，还好是python，一个函数就完了。</li>
+<li>24.信息化时代的步伐：看到题面有点摸不着头脑，去百度了一下发现跟清朝晚期的历史有关系，看来还得学好历史啊。。。用的是清晚期第一个中文编码方式，中文电码，这玩意的解码网站还不太好找，费了半天劲终于解出来了“计算机要从娃娃抓起”。。。</li>
+<li>25.凯撒？替换？呵呵：看到替换直接丢尽quipqiup里得到flag。。。</li>
+<li>26.old fashion：同上quipqiup</li>
+<li>27.Y1nglish：同样用quipqiup，但是注意到题目提示要修改一个地方，阅读文章发现quipqiup会把k替换成y，把y改回k即可</li>
+<li>28.权限获得第一步：和windows系统密码类似，直接查询hash值即可</li>
+<li>29.RSA3：我是直接factordb分解的，题目给了两段不同的e加密的密文，推测n应该是相同的，检测发现e确实是互质的，所以可以直接使用共模攻击，直接用exgcd求出x<em>e1+y</em>e2=1的x，y再把两端密文的x次幂y次幂乘起来即可</li>
+<li>30.萌萌哒的八戒：标准的猪圈密码，没什么好说的</li>
+<li>31.世上无难事：quipqiup</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
     <link itemprop="mainEntityOfPage" href="http://hunter-will.github.io/2020/05/11/crypto1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -437,7 +534,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
